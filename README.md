@@ -8,6 +8,7 @@ Setup for running a number of services on my private HomeLab, including:
 - Object storage with MinIO
 - Low-code programming with Node-RED
 - Container management with Portainer
+- Password management with Bitwarden
 - Monitoring with Grafana, Prometheus and various Prometheus scrapers (AdGuard, FRITZ!, Netatmo etc.)
 
 ## Router Configuration
