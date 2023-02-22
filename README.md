@@ -1,6 +1,6 @@
 # Docker HomeLab 
 
-Setup for running a number of services on my private home server, including:
+Setup for running a number of services on my private HomeLab, including:
 
 - Reverse proxy with Traefik
 - Ad-blocking with AdGuard Home DNS
