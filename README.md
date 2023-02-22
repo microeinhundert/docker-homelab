@@ -78,7 +78,7 @@ Install the MinIO Admin Client on the host system:
 brew install minio/stable/mc
 ```
 
-Setup the Admin Client to point to the server running MinIO:
+Set up the Admin Client to point to the server running MinIO:
 
 ```sh
 bash +o history
