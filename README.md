@@ -41,7 +41,7 @@ All subdomains should have their CNAME record pointing to the main domain.
 
 ## Setting up Docker
 
-This setup requires two external Docker networks named `traefik` and `monitoring`. Create them by running the following commands:
+This setup requires two external Docker networks named `traefik`, `monitoring` and `docker_socket_proxy`. Create them by running the following commands:
 
 ```sh
 docker network create traefik
