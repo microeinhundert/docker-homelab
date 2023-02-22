@@ -108,7 +108,7 @@ scrape_configs:
 
 > Learn more: https://min.io/docs/minio/linux/reference/minio-mc-admin/mc-admin-prometheus.html
 
-## Configuring Home Assistant for usage with Traefik proxy
+## Home Assistant behind Traefik proxy
 
 Open `iot/services/homeassistant/conf/configuration.yaml` and add the ingress IP from the Traefik reverse proxy to the list of trusted proxies:
 
