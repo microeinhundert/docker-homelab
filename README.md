@@ -52,6 +52,10 @@ docker network create docker_socket_proxy
 
 The Docker daemon should also be configured to expose metrics, learn more at https://docs.docker.com/config/daemon/prometheus/.
 
+### Socket Security
+
+Access to the Docker socket at `/var/run/docker.sock` is secured by a proxy running in a separate container. Because the proxy blocks all write access to the API, Portainer is a read-only application.
+
 ## Credentials
 
 Replace all occurrences of `### REDACTED ###` with your credentials.
@@ -120,7 +124,3 @@ http:
   trusted_proxies:
     - 0.0.0.0 # Add the Traefik ingress IP here
 ```
-
-## Docker Proxy Security
-
-Access to the Docker socket at `/var/run/docker.sock` is secured by a proxy running in a separate container. Because the proxy blocks all write access to the API, Portainer is a read-only application.
