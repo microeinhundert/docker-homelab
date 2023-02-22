@@ -38,7 +38,7 @@ The following subdomains are used:
 - traefik.*
 - bitwarden.*
 
-All subdomains should have their CNAME record pointing to the main domain.
+All subdomains should have their CNAME record point to the main domain.
 
 ## Docker
 
@@ -120,3 +120,7 @@ http:
   trusted_proxies:
     - 0.0.0.0 # Add the Traefik ingress IP here
 ```
+
+## Docker Proxy Security
+
+Access to the Docker socket at `/var/run/docker.sock` is secured by a proxy running in a separate container. Because the proxy blocks all write access to the API, Portainer is a read-only application.
