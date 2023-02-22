@@ -62,7 +62,7 @@ Learn more at https://doc.traefik.io/traefik/middlewares/http/basicauth/.
 
 The services `bitwarden` and `grafana` require SMTP server credentials set via environment variables.
 
-**Bitwarden:** Environment variables prefixed with `globalSettings__mail__smtp__`. 
+**Bitwarden:** Environment variables prefixed with `globalSettings__mail__smtp__`.  
 **Grafana:** Environment variables prefixed with `GF_SMTP_HOST`.
 
 By default, the SMTP server host for Strato is set.
