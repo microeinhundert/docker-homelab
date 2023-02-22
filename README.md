@@ -10,12 +10,12 @@ Setup for running a number of services on my private HomeLab, including:
 - Container management with Portainer
 - Monitoring with Grafana, Prometheus and various Prometheus scrapers (AdGuard, FRITZ!, Netatmo etc.)
 
-## Configuring your router
+## Router Configuration
 
 Your router should be configured to forward the ports 80, 443 and 853 to your server's IP address.
 Your router should also be configured to use the DNS server provided by AdGuard for it's DNS resolution. This will ensure that all devices on your network use AdGuard as their DNS without any additional configuration.
 
-## Setting up domains
+## Domains
 
 In order for Let's Encrypt certificates to be issued, all domains used must be properly registered in a public DNS. Don't worry, access to services running on your server from outside your home network will be prohibited by Traefik. If certain services should be accessible to the public, the Traefik middleware `only-internal-ips` should be removed from these services.
 
@@ -39,7 +39,7 @@ The following subdomains are used:
 
 All subdomains should have their CNAME record pointing to the main domain.
 
-## Setting up Docker
+## Docker
 
 This setup requires two external Docker networks named `traefik`, `monitoring` and `docker_socket_proxy`. Create them by running the following commands:
 
@@ -51,14 +51,14 @@ docker network create docker_socket_proxy
 
 The Docker daemon should also be configured to expose metrics, learn more at https://docs.docker.com/config/daemon/prometheus/.
 
-## Setting credentials
+## Credentials
 
 Replace all occurrences of `### REDACTED ###` with your credentials.
 
 In `networking/services/traefik/conf/users`, replace `### REDACTED ###` with a password hash, either using MD5, SHA1, or BCrypt.
 Learn more at https://doc.traefik.io/traefik/middlewares/http/basicauth/.
 
-## Setting up an SMTP Server
+## SMTP Server
 
 The services `bitwarden` and `grafana` require SMTP server credentials set via environment variables.
 
@@ -67,7 +67,7 @@ The services `bitwarden` and `grafana` require SMTP server credentials set via e
 
 By default, the SMTP server host for Strato is set.
 
-## Setting up Prometheus monitoring for MinIO
+## MinIO Prometheus Nonitoring
 
 First, create an Access Key in the MinIO Console and write it down somewhere.
 
