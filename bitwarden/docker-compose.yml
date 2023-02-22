@@ -1,0 +1,70 @@
+version: "3.9"
+
+services:
+  bitwarden:
+    image: bitwarden/self-host:dev
+    restart: unless-stopped
+    environment:
+      - "BW_DB_PROVIDER=mysql"
+      - "BW_DB_SERVER=mariadb"
+      - "BW_DB_DATABASE=bitwarden"
+      - "BW_DB_USERNAME=bitwarden"
+      - "BW_DB_PASSWORD=### REDACTED ###"
+      - "BW_DOMAIN=bitwarden.your-homelab-domain.de"
+      - "BW_INSTALLATION_ID=### REDACTED ###"
+      - "BW_INSTALLATION_KEY=### REDACTED ###"
+      - "globalSettings__mail__replyToEmail=webmaster@your-homelab-domain.de"
+      - "globalSettings__mail__smtp__host=smtp.strato.de"
+      - "globalSettings__mail__smtp__port=465"
+      - "globalSettings__mail__smtp__ssl=true"
+      - "globalSettings__mail__smtp__username=webmaster@your-homelab-domain.de"
+      - "globalSettings__mail__smtp__password=### REDACTED ###"
+      - "globalSettings__mail__smtp__useDefaultCredentials=false"
+      - "globalSettings__disableUserRegistration=false"      
+      - "adminSettings__admins=webmaster@your-homelab-domain.de"
+    depends_on:
+      - mariadb
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - bitwarden_data:/etc/bitwarden
+      - bitwarden_logs:/var/log/bitwarden
+    networks:
+      - traefik
+      - default
+    labels:
+      - "traefik.enable=true"
+      
+      - "traefik.http.routers.bitwarden.tls=true"
+      - "traefik.http.routers.bitwarden.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.bitwarden.rule=Host(`bitwarden.your-homelab-domain.de`)"
+      - "traefik.http.routers.bitwarden.entrypoints=websecure"
+      - "traefik.http.routers.bitwarden.middlewares=only-internal-ips@file"
+      - "traefik.http.routers.bitwarden.service=bitwarden"
+      - "traefik.http.services.bitwarden.loadbalancer.server.port=8080"
+
+  mariadb:
+    image: mariadb:latest
+    restart: unless-stopped
+    environment:
+      - "MYSQL_ROOT_PASSWORD=### REDACTED ###"
+      - "MYSQL_DATABASE=bitwarden"
+      - "MYSQL_USER=bitwarden"
+      - "MYSQL_PASSWORD=### REDACTED ###"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - default
+
+volumes:
+  bitwarden_data:
+  bitwarden_logs:
+  mariadb_data:
+
+networks:
+  traefik:
+    external: true
+  default:
+    driver: bridge

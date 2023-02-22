@@ -1,0 +1,66 @@
+version: "3.9"
+
+services:
+  adguard:
+    image: adguard/adguardhome:latest
+    restart: unless-stopped
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "853:853/tcp"
+    volumes:
+      - ./services/adguard/conf:/opt/adguardhome/conf
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - adguard_workdir:/opt/adguardhome/work
+      - letsencrypt_certs:/opt/adguardhome/letsencrypt:ro
+    networks:
+      - traefik
+      - default
+    labels:
+      - "traefik.enable=true"
+
+      - "traefik.http.routers.adguard.tls=true"
+      - "traefik.http.routers.adguard.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.adguard.rule=Host(`adguard.your-homelab-domain.de`)"
+      - "traefik.http.routers.adguard.entrypoints=websecure"
+      - "traefik.http.routers.adguard.middlewares=only-internal-ips@file"
+      - "traefik.http.routers.adguard.service=adguard"
+      - "traefik.http.services.adguard.loadbalancer.server.port=80"
+
+  adguard_exporter:
+    image: ebrianne/adguard-exporter:v1.14
+    restart: unless-stopped
+    environment:
+      - "adguard_protocol=http"
+      - "adguard_hostname=adguard"
+      - "adguard_username=### REDACTED ###"
+      - "adguard_password=### REDACTED ###"
+      - "server_port=9100"
+      - "interval=120s"
+      - "log_limit=10000"
+    depends_on:
+      - adguard
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    networks:
+      - monitoring
+      - default
+    labels:
+      - "prometheus.job=adguard-exporter"
+      - "prometheus.port=9100"
+      - "prometheus.interval=120s"
+        
+volumes:
+  adguard_workdir:
+  letsencrypt_certs:
+    external: true
+
+networks:
+  traefik:
+    external: true
+  monitoring:
+    external: true
+  default:
+    driver: bridge

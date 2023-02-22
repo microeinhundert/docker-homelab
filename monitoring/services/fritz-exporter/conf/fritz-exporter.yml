@@ -1,0 +1,7 @@
+exporter_port: 9100
+log_level: ERROR
+devices:
+- name: FRITZ!Box
+  hostname: fritz.box
+  username: ### REDACTED ###
+  password: ### REDACTED ###

@@ -1,0 +1,35 @@
+version: "3.9"
+
+services:
+  docker_socket_proxy:
+    image: tecnativa/docker-socket-proxy:latest
+    restart: unless-stopped
+    environment:
+      - "BUILD=1"
+      - "COMMIT=1"
+      - "CONFIGS=1"
+      - "CONTAINERS=1"
+      - "DISTRIBUTION=1"
+      - "EXEC=1"
+      - "GRPC=1"
+      - "IMAGES=1"
+      - "INFO=1"
+      - "NETWORKS=1"
+      - "NODES=1"
+      - "PLUGINS=1"
+      - "SERVICES=1"
+      - "SESSION=1"
+      - "SYSTEM=1"
+      - "TASKS=1"
+      - "VOLUMES=1"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - docker_socket_proxy
+      - default
+
+networks:
+  docker_socket_proxy:
+    external: true
+  default:
+    driver: bridge

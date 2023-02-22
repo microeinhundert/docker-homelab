@@ -1,0 +1,84 @@
+tls:
+  options:
+    default:
+      minVersion: VersionTLS12
+      sniStrict: true
+      cipherSuites:
+        - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        - TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305
+        - TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305
+        - TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+        - TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+      curvePreferences:
+        - CurveP521
+        - CurveP384
+    mintls13:
+      minVersion: VersionTLS13
+
+http:
+  routers:
+    homeassistant:
+      rule: "Host(`homeassistant.your-homelab-domain.de`)"
+      service: homeassistant
+      entryPoints:
+        - websecure
+      middlewares:
+        - only-internal-ips@file
+      tls:
+        certresolver: letsencrypt
+    homebridge:
+      rule: "Host(`homebridge.your-homelab-domain.de`)"
+      service: homebridge
+      entryPoints:
+        - websecure
+      middlewares:
+        - only-internal-ips@file
+      tls:
+        certresolver: letsencrypt
+    fritzbox:
+      rule: "Host(`fritzbox.your-homelab-domain.de`)"
+      service: fritzbox
+      entryPoints:
+        - websecure
+      middlewares:
+        - only-internal-ips@file
+      tls:
+        certresolver: letsencrypt
+  services:
+    homeassistant:
+      loadBalancer:
+        passHostHeader: true
+        servers:
+          - url: http://host.docker.internal:8123
+    homebridge:
+      loadBalancer:
+        passHostHeader: true
+        servers:
+          - url: http://host.docker.internal:8581
+    fritzbox:
+      loadBalancer:
+        passHostHeader: true
+        servers:
+          - url: http://fritzbox
+  middlewares:
+    auth:
+      basicAuth:
+        usersFile: /etc/traefik/users
+    only-internal-ips:
+      ipWhiteList:
+        sourceRange:
+          - 192.168.178.0/24
+    security-headers:
+      headers:
+        browserXssFilter: true
+        contentTypeNosniff: true
+        frameDeny: true
+        stsIncludeSubdomains: true
+        stsPreload: true
+        stsSeconds: 31536000
+        customRequestHeaders:
+          X-Frame-Options: "SAMEORIGIN"
+        customFrameOptionsValue: "SAMEORIGIN"
+    gzip-compression:
+      compress: {}

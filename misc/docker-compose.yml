@@ -1,0 +1,72 @@
+version: "3.9"
+
+services:
+  nodered:
+    image: nodered/node-red:latest
+    restart: unless-stopped
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - nodered_data:/data
+    networks:
+      - traefik
+      - default
+    labels:
+      - "traefik.enable=true"
+
+      - "traefik.http.routers.nodered.tls=true"
+      - "traefik.http.routers.nodered.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.nodered.rule=Host(`nodered.your-homelab-domain.de`)"
+      - "traefik.http.routers.nodered.entrypoints=websecure"
+      - "traefik.http.routers.nodered.middlewares=only-internal-ips@file"
+      - "traefik.http.routers.nodered.service=nodered"
+      - "traefik.http.services.nodered.loadbalancer.server.port=1880"
+
+  minio:
+    image: minio/minio:latest
+    restart: unless-stopped
+    command: minio server /data/minio --console-address ":9001"
+    environment:
+      - "MINIO_BROWSER_REDIRECT_URL=https://console.minio.your-homelab-domain.de"
+      - "MINIO_PROMETHEUS_URL=http://prometheus:9090"
+      - "MINIO_PROMETHEUS_JOB_ID=minio"
+      - "MINIO_ROOT_USER=### REDACTED ###"
+      - "MINIO_ROOT_PASSWORD=### REDACTED ###"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - minio_data:/data/minio
+    networks:
+      - traefik
+      - monitoring
+      - default
+    labels:
+      - "traefik.enable=true"
+
+      - "traefik.http.routers.minio.tls=true"
+      - "traefik.http.routers.minio.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.minio.rule=Host(`minio.your-homelab-domain.de`)"
+      - "traefik.http.routers.minio.entrypoints=websecure"
+      - "traefik.http.routers.minio.middlewares=only-internal-ips@file"
+      - "traefik.http.routers.minio.service=minio"
+      - "traefik.http.services.minio.loadbalancer.server.port=9000"
+
+      - "traefik.http.routers.minio-console.tls=true"
+      - "traefik.http.routers.minio-console.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.minio-console.rule=Host(`console.minio.your-homelab-domain.de`)"
+      - "traefik.http.routers.minio-console.entrypoints=websecure"
+      - "traefik.http.routers.minio-console.middlewares=only-internal-ips@file"
+      - "traefik.http.routers.minio-console.service=minio-console"
+      - "traefik.http.services.minio-console.loadbalancer.server.port=9001"
+
+volumes:
+  nodered_data:
+  minio_data:
+
+networks:
+  traefik:
+    external: true
+  monitoring:
+    external: true
+  default:
+    driver: bridge

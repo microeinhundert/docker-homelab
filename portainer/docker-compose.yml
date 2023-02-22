@@ -1,0 +1,44 @@
+version: "3.9"
+
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    restart: unless-stopped
+    command: -H tcp://docker_socket_proxy:2375
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - portainer_datadir:/data
+    networks:
+      - traefik
+      - docker_socket_proxy
+      - default
+    labels:
+      - "traefik.enable=true"
+      
+      - "traefik.http.routers.portainer.tls=true"
+      - "traefik.http.routers.portainer.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.portainer.rule=Host(`portainer.your-homelab-domain.de`)"
+      - "traefik.http.routers.portainer.entrypoints=websecure"
+      - "traefik.http.routers.portainer.middlewares=only-internal-ips@file"
+      - "traefik.http.routers.portainer.service=portainer"
+      - "traefik.http.services.portainer.loadbalancer.server.port=9000"
+
+      - "traefik.http.routers.portainer-edge.tls=true"
+      - "traefik.http.routers.portainer-edge.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.portainer-edge.rule=Host(`edge.portainer.your-homelab-domain.de`)"
+      - "traefik.http.routers.portainer-edge.entrypoints=websecure"
+      - "traefik.http.routers.portainer-edge.middlewares=only-internal-ips@file"
+      - "traefik.http.routers.portainer-edge.service=portainer-edge"
+      - "traefik.http.services.portainer-edge.loadbalancer.server.port=8000"
+
+volumes:
+  portainer_datadir:
+
+networks:
+  traefik:
+    external: true
+  docker_socket_proxy:
+    external: true
+  default:
+    driver: bridge
