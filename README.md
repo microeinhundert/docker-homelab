@@ -36,7 +36,6 @@ The following subdomains are used:
 - prometheus.*
 - traefik.*
 - bitwarden.*
-- fritzbox.*
 
 All subdomains should have their CNAME record pointing to the main domain.
 

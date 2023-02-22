@@ -36,15 +36,6 @@ http:
         - only-internal-ips@file
       tls:
         certresolver: letsencrypt
-    fritzbox:
-      rule: "Host(`fritzbox.your-homelab-domain.de`)"
-      service: fritzbox
-      entryPoints:
-        - websecure
-      middlewares:
-        - only-internal-ips@file
-      tls:
-        certresolver: letsencrypt
   services:
     homeassistant:
       loadBalancer:
@@ -56,11 +47,6 @@ http:
         passHostHeader: true
         servers:
           - url: http://host.docker.internal:8581
-    fritzbox:
-      loadBalancer:
-        passHostHeader: true
-        servers:
-          - url: http://fritzbox
   middlewares:
     auth:
       basicAuth:
