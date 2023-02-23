@@ -42,12 +42,13 @@ All subdomains should have their CNAME record point to the main domain.
 
 ## Docker
 
-This setup requires three external Docker networks named `traefik`, `monitoring` and `docker_socket_proxy`. Create them by running the following commands:
+This setup requires three external Docker networks named `traefik`, `monitoring` and `docker_socket_proxy` as well as one external volume named `letsencrypt_certs`. Create them by running the following commands:
 
 ```sh
 docker network create traefik
 docker network create monitoring
 docker network create docker_socket_proxy
+docker volume create letsencrypt_certs
 ```
 
 The Docker daemon should also be configured to expose metrics, learn more at https://docs.docker.com/config/daemon/prometheus/.
