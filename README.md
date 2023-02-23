@@ -1,6 +1,6 @@
-# Docker HomeLab 
+# Docker Home Lab 
 
-Setup for running a number of services on my private HomeLab, including:
+Setup for running a number of services on my private home lab, including:
 
 - Reverse proxy with Traefik
 - Ad-blocking with AdGuard Home DNS
@@ -18,7 +18,7 @@ Your router should also be configured to use the DNS server provided by AdGuard 
 
 ## Domains
 
-In order for Let's Encrypt certificates to be issued, all domains used must be properly registered in a public DNS. Don't worry, access to services running on your server from outside your home network will be prohibited by Traefik. If certain services should be accessible to the public, the Traefik middleware `only-internal-ips` should be removed from these services.
+For Let's Encrypt certificates to be issued, all domains used must be registered in a public DNS and point to your server via DynDNS. Don't worry, access to services running on your server from outside your home network will be prohibited by Traefik. If certain services should be accessible to the public, the Traefik middleware `only-internal-ips` should be removed from these services.
 
 In order for your devices to access private services behind the `only-internal-ips` middleware, these devices should use the AdGuard DNS.
 
@@ -42,7 +42,7 @@ All subdomains should have their CNAME record point to the main domain.
 
 ## Docker
 
-This setup requires two external Docker networks named `traefik`, `monitoring` and `docker_socket_proxy`. Create them by running the following commands:
+This setup requires three external Docker networks named `traefik`, `monitoring` and `docker_socket_proxy`. Create them by running the following commands:
 
 ```sh
 docker network create traefik
