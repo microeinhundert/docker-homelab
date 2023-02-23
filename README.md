@@ -72,7 +72,7 @@ The services `bitwarden` and `grafana` require SMTP server credentials set via e
 
 By default, the SMTP server host for Strato is set.
 
-## MinIO Prometheus Nonitoring
+## MinIO Prometheus Monitoring
 
 First, create an Access Key in the MinIO Console and write it down somewhere.
 
