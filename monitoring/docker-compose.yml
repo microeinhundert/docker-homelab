@@ -135,7 +135,7 @@ services:
       - "GF_SERVER_CERT_KEY=/var/lib/grafana/letsencrypt/private/grafana.your-homelab-domain.de.key"
       - "GF_SERVER_DOMAIN=grafana.your-homelab-domain.de"
       - "GF_SERVER_ENFORCE_DOMAIN=true"
-      - "GF_USERS_ALLOW_SIGN_UP=false"
+      - "GF_USERS_ALLOW_SIGN_UP=true"
     depends_on:
       - prometheus
     volumes:
