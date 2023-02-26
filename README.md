@@ -16,6 +16,17 @@ Setup for running a number of services on my private home lab, including:
 Your router should be configured to forward the ports 80, 443 and 853 to your server's IP address.
 Your router should also be configured to use the DNS server provided by AdGuard for it's DNS resolution. This will ensure that all devices on your network use AdGuard as their DNS without any additional configuration.
 
+## DNS Server Configuration
+
+To prevent internal requests to your domain from leaving your local home network, add a DNS rewrite to AdGuard that resolves your domain to your server's private IP:
+
+```yml
+# adguard/services/adguard/conf/AdGuardHome.yaml
+rewrites:
+    - domain: '*.your-homelab-domain.de'
+      answer: 192.168.178.36 # Private IP of your server
+```
+
 ## Domains
 
 For Let's Encrypt certificates to be issued, all domains used must be registered in a public DNS and point to your server via DynDNS. Don't worry, access to services running on your server from outside your home network will be prohibited by Traefik. If certain services should be accessible to the public, the Traefik middleware `only-internal-ips` should be removed from these services.
@@ -63,6 +74,13 @@ Replace all occurrences of `### REDACTED ###` with your credentials.
 
 In `networking/services/traefik/conf/users`, replace `### REDACTED ###` with a password hash, either using MD5, SHA1, or BCrypt.
 Learn more at https://doc.traefik.io/traefik/middlewares/http/basicauth/.
+
+### Grafana
+
+Default credentials for the Grafana dashboard:
+
+**Username:** admin  
+**Password:** admin  
 
 ## SMTP Server
 
