@@ -21,7 +21,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "9.3.6"
+      "version": "9.4.1"
     },
     {
       "type": "datasource",
@@ -191,7 +191,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.3.6",
+      "pluginVersion": "9.4.1",
       "targets": [
         {
           "datasource": {
@@ -276,7 +276,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.3.6",
+      "pluginVersion": "9.4.1",
       "targets": [
         {
           "datasource": {
@@ -359,7 +359,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.3.6",
+      "pluginVersion": "9.4.1",
       "targets": [
         {
           "datasource": {
@@ -433,7 +433,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.3.6",
+      "pluginVersion": "9.4.1",
       "targets": [
         {
           "datasource": {
@@ -528,7 +528,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.3.6",
+      "pluginVersion": "9.4.1",
       "targets": [
         {
           "datasource": {
@@ -609,7 +609,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.3.6",
+      "pluginVersion": "9.4.1",
       "targets": [
         {
           "datasource": {
@@ -688,7 +688,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.3.6",
+      "pluginVersion": "9.4.1",
       "targets": [
         {
           "datasource": {
@@ -770,7 +770,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.3.6",
+      "pluginVersion": "9.4.1",
       "targets": [
         {
           "datasource": {
@@ -853,7 +853,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.3.6",
+      "pluginVersion": "9.4.1",
       "targets": [
         {
           "datasource": {
@@ -934,7 +934,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.3.6",
+      "pluginVersion": "9.4.1",
       "targets": [
         {
           "datasource": {
@@ -1013,7 +1013,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.3.6",
+      "pluginVersion": "9.4.1",
       "targets": [
         {
           "datasource": {
@@ -23045,8 +23045,9 @@
       "type": "timeseries"
     }
   ],
-  "refresh": false,
-  "schemaVersion": 37,
+  "refresh": "",
+  "revision": 1,
+  "schemaVersion": 38,
   "style": "dark",
   "tags": [
     "linux"
@@ -23179,6 +23180,6 @@
   "timezone": "browser",
   "title": "System",
   "uid": "rYdddlPWk",
-  "version": 4,
+  "version": 1,
   "weekStart": ""
 }

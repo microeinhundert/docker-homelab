@@ -15,7 +15,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "9.3.6"
+      "version": "9.4.1"
     },
     {
       "type": "panel",
@@ -1453,8 +1453,9 @@
       "type": "timeseries"
     }
   ],
-  "refresh": false,
-  "schemaVersion": 37,
+  "refresh": "",
+  "revision": 1,
+  "schemaVersion": 38,
   "style": "dark",
   "tags": [
     "networking"
@@ -1533,6 +1534,6 @@
   "timezone": "",
   "title": "Traefik Proxy",
   "uid": "n5bu_kv45",
-  "version": 9,
+  "version": 1,
   "weekStart": ""
 }

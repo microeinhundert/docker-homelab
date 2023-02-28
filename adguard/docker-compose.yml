@@ -29,7 +29,7 @@ services:
       - "traefik.http.services.adguard.loadbalancer.server.port=80"
 
   adguard_exporter:
-    image: ebrianne/adguard-exporter:v1.14
+    image: ebrianne/adguard-exporter:latest
     restart: unless-stopped
     environment:
       - "adguard_protocol=http"

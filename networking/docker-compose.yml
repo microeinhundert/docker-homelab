@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   traefik:
-    image: traefik:v2.9
+    image: traefik:latest
     restart: unless-stopped
     ports:
       - 80:80
@@ -41,7 +41,7 @@ services:
       - "traefik.http.routers.traefik-api.service=api@internal"
 
   traefik_certs_dumper:
-    image: ldez/traefik-certs-dumper:v2.8.1
+    image: ldez/traefik-certs-dumper:latest
     restart: unless-stopped
     command: file --version v2 --watch --source /input/acme.json --dest /output
     depends_on:
