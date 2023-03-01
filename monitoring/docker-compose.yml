@@ -139,6 +139,7 @@ services:
     depends_on:
       - prometheus
     volumes:
+      - ./services/grafana/provisioning:/etc/grafana/provisioning
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
       - grafana_data:/var/lib/grafana
